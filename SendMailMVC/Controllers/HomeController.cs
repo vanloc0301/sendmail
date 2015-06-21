@@ -26,11 +26,12 @@ namespace SendMailMVC.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Contact(EmailFormModel model)
+        public async Task<ActionResult> Contact(EmailFormModel model) 
         {
             if (ModelState.IsValid)
             {
                 var body = "<p>Email từ: {0} ({1})</p><p> Tin nhắn: </p><p>{2}</p>";
+                //tạo đối tượng message giữ tất cả thông tin email gửi.
                 var message = new MailMessage();
                 message.To.Add(new MailAddress("vanloc0301@gmail.com"));
                 message.From = new MailAddress("vanloc0301@outlook.com");
@@ -40,15 +41,15 @@ namespace SendMailMVC.Controllers
 
                 using (var smtp = new SmtpClient())
                 {
-                    var credential = new NetworkCredential
-                    {
-                        UserName = "vanloc0301@outlook.com",
-                        Password = "r0ysy0301"
-                    };
-                    smtp.Credentials = credential;
-                    smtp.Host = "smtp-outlook.com";
-                    smtp.Port = 587;
-                    smtp.EnableSsl = true;
+                    //var credential = new NetworkCredential
+                    //{
+                    //    UserName = "vanloc0301@outlook.com",
+                    //    Password = "r0ysy0301"
+                    //};
+                    //smtp.Credentials = credential;
+                    //smtp.Host = "smtp-outlook.com";
+                    //smtp.Port = 587;
+                    //smtp.EnableSsl = true;
                     await smtp.SendMailAsync(message);
                     return RedirectToAction("Sent");
                 }
